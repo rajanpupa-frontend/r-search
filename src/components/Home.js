@@ -1,4 +1,5 @@
 import React from 'react';
+import elasticService from "../services/ElasticService";
 
 class Home extends React.Component{
     constructor(props) {
@@ -15,7 +16,6 @@ class Home extends React.Component{
         });
     }
     onFormSubmit(event) {
-        //console.log('A name was submitted: ' + this.state.searchText);
         event.preventDefault();
         this.props.history.push(`/search?query=${this.state.searchText  }`);
     }
