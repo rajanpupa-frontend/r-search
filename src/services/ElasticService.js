@@ -4,7 +4,6 @@ const ELASTIC_URL = 'http://localhost:9200';
 const INDEX_NAME = 'rsearch';
 
 class ElasticService {
-
     indexExists(index_name){
         return axios.head(`${ELASTIC_URL}/${index_name}` );
     };
@@ -19,14 +18,14 @@ class ElasticService {
     createIndexIfNotExist(index_name){
         this.indexExists(index_name)
             .then(result=>{
-                console.log(`${index_name} already exists. Moving on!!!`);
+                console.log(`Index ${index_name} already exists. Moving on!!!`);
             }).catch(err=>{
                 console.log(`${index_name} not exists.`);
                 this.createIndex(index_name);
             });
     };
-    getData(query){
-        return axios.get('https://rickandmortyapi.com/api/location/');
+    multimatch_search(query){
+        return axios.post(`${ELASTIC_URL}/${INDEX_NAME}/doc/_search`,query)
     };
 }
 const elasticService = new ElasticService();
