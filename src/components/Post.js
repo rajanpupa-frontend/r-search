@@ -22,8 +22,16 @@ class Post extends React.Component{
         });
     };
 
-    onFormSubmit(){
-        
+    onFormSubmit(event){
+        event.preventDefault();
+        elasticService.insert_a_document(this.state).then(
+            (result)=>{
+                console.log('Document created successfully');
+            }, (error)=>{
+                console.error('Document creation failed ')
+                console.error(error);
+            }
+        )
     };
 
     handleAddChip(chip) {
@@ -33,7 +41,9 @@ class Post extends React.Component{
     }
     
     handleDeleteChip(chip, index) {
-        console.log(chip);
+        console.log(this.state);
+        var index = this.state.tags.indexOf(chip);
+        this.state.tags.splice(index);
     }
 
     render(){
@@ -43,13 +53,14 @@ class Post extends React.Component{
                 <form onSubmit={this.onFormSubmit}>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
-                        <input type="text" className="form-control" id="title" placeholder="title" onChange={this.onFieldChange}/>
+                        <input type="text" className="form-control" id="title" name='title' placeholder="title" onChange={this.onFieldChange}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="body">Body</label>
-                        <textarea className="form-control" id="body" rows="3" onChange={this.onFieldChange}></textarea>
+                        <textarea className="form-control" id="body" name='body' rows="3" onChange={this.onFieldChange}></textarea>
                     </div>
                     <ChipInput
+                        name='tags'
                         value={this.state.tags}
                         onAdd={(chip) => this.handleAddChip(chip)}
                         onDelete={(chip, index) => this.handleDeleteChip(chip, index)}

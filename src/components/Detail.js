@@ -1,6 +1,4 @@
 import React from 'react';
-import queryString from 'query-string'
-import get_multi_match_query from '../models/multi_match_query';
 import elasticService from '../services/ElasticService';
 
 class Detail extends React.Component {
