@@ -1,5 +1,4 @@
 import React from 'react';
-import elasticService from "../services/ElasticService";
 
 class Home extends React.Component{
     constructor(props) {
