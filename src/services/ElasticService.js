@@ -27,6 +27,9 @@ class ElasticService {
     multimatch_search(query){
         return axios.post(`${ELASTIC_URL}/${INDEX_NAME}/doc/_search`,query)
     };
+    get_by_id(id){
+        return axios.get(`${ELASTIC_URL}/${INDEX_NAME}/doc/${id}`);
+    };
 }
 const elasticService = new ElasticService();
 elasticService.createIndexIfNotExist(INDEX_NAME);

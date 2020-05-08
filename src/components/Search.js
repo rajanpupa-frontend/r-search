@@ -2,13 +2,14 @@ import React from 'react';
 import queryString from 'query-string'
 import get_multi_match_query from './../models/multi_match_query';
 import elasticService from './../services/ElasticService';
+import {Link} from "react-router-dom";
 
 class Search extends React.Component {
 
     constructor(params) {
         super(params);
         const values = queryString.parse(params.location.search);
-        console.log(values.query);
+        //console.log(values.query);
         if (values.query===undefined) {
             values.query=''
         }
@@ -29,7 +30,6 @@ class Search extends React.Component {
     }
 
     onFormSubmit(event) {
-        //console.log('A name was submitted: ' + this.state.searchText);
         event.preventDefault();
         this.getSearchResults(this.state.searchText);
         console.log('getting search result');
@@ -46,6 +46,7 @@ class Search extends React.Component {
                 let id = hit._id;
                 let src = hit._source;
                 src.id = id;
+                src.body = src.body.substring(0,100)
                 return src;
             });
             console.log(docs)
@@ -55,14 +56,11 @@ class Search extends React.Component {
         }, (error) =>{
             console.log('data received error search.')
         });
-        // this.setState({
-        //     searchResult: [{text: 'Result 1', id: 1}, {text: 'Result 2', id: 2}]
-        // })
     }
 
     render() {
         return (
-            <div>
+            <div id="search-page" className="container-fluid">
                 <div id='search-div'>
                     <h1>Search</h1>
                     <form onSubmit={this.onFormSubmit}>
@@ -78,9 +76,9 @@ class Search extends React.Component {
                 </div>
                 <div className='search-results'>
                     {this.state.searchResult.map(result =>
-                        <div className='search-result' key={result.id}>
-                            <p>{result.title}</p>
-                            <p>{result.body}</p>
+                        <div className='search-result text-justify' key={result.id}>
+                            <div className="search-result-title"><span><Link to={`/detail/${result.id}` } > {result.title} </Link></span></div>
+                            <div className="search-result-body"><p>{ result.body?result.body + ' ...' : '' }</p></div>
                         </div>
                     )}
                 </div>

@@ -33,6 +33,27 @@ nav .h3-link {
 }
 
 #search-div {
-  width : 50%;
+  max-width : 80em;
   margin: 0 auto;
+}
+
+.search-result {
+  margin: 0 auto;
+  max-width: 80em;
+}
+
+.article-title {
+  margin-top: 2em;
+}
+
+.article-body {
+  margin-top: 2em;
+}
+
+.article-tags {
+  margin-top: 2em;
+}
+
+.tag {
+  margin-left: 1em;
 }
