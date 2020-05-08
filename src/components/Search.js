@@ -10,17 +10,22 @@ class Search extends React.Component {
         super(params);
         const values = queryString.parse(params.location.search);
         //console.log(values.query);
-        if (values.query===undefined) {
-            values.query=''
-        }
+        
         this.state = {
             searchText: values.query,
             searchResult: [{text: '', id: 1}]
         };
+        
+        if (values.query===undefined) {
+            values.query=''
+        } else {
+            this.getSearchResults(values.query);
+        }
+        
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
         // display the results in the window
-        //this.getSearchResults();
+        
     };
 
     onFieldChange(event) {
@@ -78,7 +83,7 @@ class Search extends React.Component {
                     {this.state.searchResult.map(result =>
                         <div className='search-result text-justify' key={result.id}>
                             <div className="search-result-title"><span><Link to={`/detail/${result.id}` } > {result.title} </Link></span></div>
-                            <div className="search-result-body"><p>{ result.body?result.body + ' ...' : '' }</p></div>
+                            <div className="search-result-body"><p>{ result.body ? result.body + ' ...' : '' }</p></div>
                         </div>
                     )}
                 </div>
